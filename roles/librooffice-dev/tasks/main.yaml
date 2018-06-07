@@ -1,0 +1,21 @@
+---
+
+- name: Check if librooffice-dev is already downloaded
+  file: path=/usr/local/librooffice-dev recurse=yes state=directory
+
+- stat: path=/usr/local/librooffice-dev/LibreOffice_5.3.1_Linux_x86-64_deb.tar.gz
+  register: libro
+
+
+- name: Installling 
+  get_url: url="http://mirror.library.ucy.ac.cy/tdf/libreoffice/stable/5.3.1/deb/x86_64/LibreOffice_5.3.1_Linux_x86-64_deb.tar.gz" dest="/usr/local/librooffice-dev/"
+
+- name: Unarchive files
+  unarchive:
+#      extra_opts: ['--strip-components=1']
+      src: /usr/local/librooffice-dev/LibreOffice_5.3.1_Linux_x86-64_deb.tar.gz
+      copy: no
+      dest: /usr/local/librooffice-dev/
+
+- name: Installing debian packages
+  shell: "cd /usr/local/librooffice-dev/LibreOffice_5.3.1.2_Linux_x86-64_deb/DEBS && dpkg -i *.deb"

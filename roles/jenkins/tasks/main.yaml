@@ -1,0 +1,19 @@
+---
+
+- name: Add jenkins apt-key
+  apt_key: url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key state=present
+
+- name: Update Repo
+  apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' state=present
+
+- name: Install jenkins
+  apt: pkg=jenkins update-cache=yes state=latest
+  ignore_errors: yes
+    
+- name: Update Jenkins Port
+  lineinfile: dest=/etc/default/jenkins regexp='^(.*)HTTP_PORT=' line=HTTP_PORT=8090
+
+- name: Install jenkins
+  apt: pkg=jenkins update-cache=yes state=latest
+  notify:
+    - restart jenkins

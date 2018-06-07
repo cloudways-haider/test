@@ -1,0 +1,10 @@
+---
+
+- name: Update Repo
+  apt_repository: repo='deb http://ftp.debian.org/debian jessie-backports main' state=present
+
+- name: Install jessie-backports
+  apt: pkg=jessie-backports update-cache=yes state=latest
+  
+- name: Install unoconv
+  apt: pkg=unoconv update-cache=yes state=latest

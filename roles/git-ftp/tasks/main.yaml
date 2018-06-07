@@ -1,0 +1,4 @@
+---
+
+- name: Install git-ftp
+  apt: pkg=git-ftp update-cache=yes state=latest
